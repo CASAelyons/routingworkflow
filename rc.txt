@@ -1,0 +1,3 @@
+route_plan.cfg		file://${PWD}/input/route_plan.cfg	site="local"
+
+#.*                             file://${PWD}/input/[0]                             site="local"    regex="true"
