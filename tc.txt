@@ -1,0 +1,35 @@
+cont routing_container {
+    type "docker"
+    image_site "local"
+    #image "docker:///casaelyons/routingcontainer"
+    image "file://${PWD}/bin/routingcontainer.tar"
+    profile env "SEQEXEC_CPUS" "4"
+}
+
+cont routing_container_nfs {
+    type "docker"
+    image_site "condorpool_nfs"
+    image "file:///nfs/shared/routingcontainer.tar"
+    mount "/nfs/shared:/nfs/shared"
+    profile env "SEQEXEC_CPUS" "4"
+}
+
+tr route_plan {
+   	site condorpool {
+	     	container "routing_container"
+		pfn "/opt/route_plan/route_plan"
+		arch "x86_64"
+		os "LINUX"
+		type "INSTALLED"
+		profile pegasus "cores" "1"
+	}
+   	site condorpool_nfs {
+	     	container "routing_container_nfs"
+		pfn "/opt/route_plan/route_plan"
+		arch "x86_64"
+		os "LINUX"
+		type "INSTALLED"
+		profile pegasus "cores" "1"
+	}
+}
+		
