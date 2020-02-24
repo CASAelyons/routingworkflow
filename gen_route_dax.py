@@ -13,10 +13,10 @@ from argparse import ArgumentParser
 class routingWorkflow(object):
     def __init__(self, outdir, featurename, flights, obstacles, outputFlightURL, usrname, password):
         self.outdir = outdir
-        self.featurename = featurename
-        self.flights = flights
-        self.obstacles = obstacles
-        self.outputFlightURL = outputFlightURL
+        self.featurename = '"' + featurename + '"'
+        self.flights = '"' + flights + '"'
+        self.obstacles = '"' + obstacles + '"'
+        self.outputFlightURL = '"' + outputFlightURL + '"'
         self.usrname = usrname
         self.password = password
 
