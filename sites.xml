@@ -13,34 +13,17 @@
          <file-server operation="all" url="file://${PWD}/output"/>
       </directory>
    </site>
-
-   <site handle="condorpool" arch="x86_64" os="LINUX">
-      <!-- These profiles tell Pegasus that the site is a plain Condor pool -->
-      <profile namespace="pegasus" key="style">condor</profile>
-      <profile namespace="pegasus" key="data.configuration">condorio</profile>
-      <profile namespace="condor" key="universe">vanilla</profile>
-      <profile namespace="pegasus" key="clusters.size">1</profile>
-      <profile namespace="pegasus" key="cores">1</profile>
-      <profile namespace="pegasus" key="memory">2048</profile>
-   </site>
    
    <site handle="condorpool_nfs" arch="x86_64" os="LINUX">
-      <!-- These profiles tell Pegasus that the site is a plain Condor pool -->
-      <!--directory type="shared-scratch"  path="/nfs/shared/ldm/scratch/route_plan">
-         <file-server operation="all"   url="scp://ldm@exogeni_storage/nfs/shared/ldm/scratch/route_plan"/>
-      </directory-->
-      <directory type="shared-scratch"  path="/nfs/shared/ldm/scratch/route_plan">
-         <file-server operation="all"   url="scp://ldm@chameleon_storage/nfs/shared/ldm/scratch/route_plan"/>
+      <directory type="shared-scratch"  path="/nfs/shared/ldm/route_plan">
+         <file-server operation="all"   url="scp://ldm@10.7.3.41:/nfs/shared/ldm/route_plan"/>
       </directory>
-
-
       <profile namespace="pegasus" key="style">condor</profile>
       <profile namespace="pegasus" key="data.configuration">nonsharedfs</profile>
       <profile namespace="condor" key="universe">vanilla</profile>
       <profile namespace="pegasus" key="clusters.size">32</profile>
       <profile namespace="pegasus" key="cores">4</profile>
       <profile namespace="pegasus" key="memory">2048</profile>
-
       <profile namespace="pegasus" key="SSH_PRIVATE_KEY">/home/ldm/.ssh/storage_rsa</profile>
    </site>
 </sitecatalog>
