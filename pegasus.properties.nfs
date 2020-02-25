@@ -17,3 +17,4 @@ pegasus.transfer.worker.package.strict = false
 pegasus.integrity.checking = none
 
 pegasus.transfer.links = true
+pegasus.transfer.bypass.input.staging = true
