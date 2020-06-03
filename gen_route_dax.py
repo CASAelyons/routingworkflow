@@ -11,7 +11,7 @@ from datetime import datetime
 from argparse import ArgumentParser
 
 class routingWorkflow(object):
-    def __init__(self, outdir, featurename, flights, obstacles, outputFlightURL, usrname, password):
+    def __init__(self, outdir, featurename, flights, obstacles, outputFlightURL, usrname, password, bufferkm):
         self.outdir = outdir
         self.featurename = '"' + featurename + '"'
         self.flights = '"' + flights + '"'
@@ -19,6 +19,7 @@ class routingWorkflow(object):
         self.outputFlightURL = '"' + outputFlightURL + '"'
         self.usrname = usrname
         self.password = password
+        self.bufferkm = bufferkm
 
     def generate_dax(self):
         
@@ -34,6 +35,7 @@ class routingWorkflow(object):
         routing_job.addArguments("-o", self.obstacles) 
         routing_job.addArguments("-t", self.outputFlightURL) 
         routing_job.addArguments("-u", usrpass)
+        routing_job.addArguments("-b", bufferkm)
         dax.addJob(routing_job)
 
         # Write the DAX file
@@ -53,6 +55,7 @@ if __name__ == '__main__':
     parser.add_argument("-t", "--outputFlightURL", metavar="OUTPUT_FLIGHT_URL", type=str, help="URL to post output", required=True)
     parser.add_argument("-u", "--usrname", metavar="USR", type=str, help="username for query authentication", required=True)
     parser.add_argument("-p", "--password", metavar="PASS", type=str, help="password for query authentication", required=True)
+    parser.add_argument("-b", "--bufferkm", metavar="BUFF", type=str, help="buffer zone around obstacles in km", required=True)
     parser.add_argument("-d", "--outdir", metavar="OUTPUT_LOCATION", type=str, help="DAX Directory", required=True)
     args = parser.parse_args()
     outdir = os.path.abspath(args.outdir)
@@ -65,6 +68,7 @@ if __name__ == '__main__':
     outputFlightURL = args.outputFlightURL
     usrname = args.usrname
     password = args.password
+    bufferkm = args.bufferkm
     
     CASA_AUTH = (usrname,password) 
     response = requests.get(flights, auth=CASA_AUTH, verify=True)
@@ -76,7 +80,7 @@ if __name__ == '__main__':
         if feature['geometry']['type'] == 'LineString':
             featurename = feature['properties']['eventName']
             print featurename
-            workflow = routingWorkflow(outdir,featurename,flights,obstacles,outputFlightURL,usrname,password)
+            workflow = routingWorkflow(outdir,featurename,flights,obstacles,outputFlightURL,usrname,password,bufferkm)
             workflow.generate_workflow()
 
             
